@@ -16,15 +16,17 @@
 </head>
 <body>
   <h1>🐶 Reto 3 — La terminal</h1>
-  <p>Una terminal igual que la de tu sistema. En seguridad, ciertos comandos revelan información del equipo y de la red: ese es el primer paso de un atacante (reconocimiento).</p>
+  <p>Tienes delante una terminal como la de tu sistema. En seguridad, el primer paso de un atacante es el <b>reconocimiento</b>: averiguar datos del equipo y de la red.</p>
+
   <div class="pista">
-    <p><b>Pista:</b> Escribe <code>help</code> para ver los comandos. Luego prueba <code>ipconfig</code> y pulsa Enter.</p>
+    <p><b>Pista:</b> Utiliza un comando que te lleve a conocer tu dirección de red.</p>
   </div>
 
   <div id="terminal">
-    <p id="salida">Microsoft Windows [Version 10.0]. Escribe "help" para empezar.</p>
+    <p id="salida">Microsoft Windows [Version 10.0]</p>
     <span>&gt;&nbsp;</span><input type="text" id="cmd" autocomplete="off" onkeydown="if(event.key==='Enter')ejecutar()">
   </div>
+
   <p style="margin-top:20px;"><a href="index.html">← Volver al menú</a></p>
 
   <script>
@@ -33,17 +35,16 @@
       const salida = document.getElementById('salida');
       const c = input.value.trim().toLowerCase();
       let resp = "";
-      if (c === 'help') {
-        resp = "Comandos disponibles: help, ipconfig, clear";
-      } else if (c === 'ipconfig') {
+      // Aceptamos las variantes más comunes del comando.
+      if (c === 'ipconfig' || c === 'ipconfig /all' || c === 'ifconfig' || c === 'ip a' || c === 'ip addr') {
         resp =
-          "Configuracion IP de Windows\n\n" +
-          "Adaptador de Ethernet:\n" +
+          "Configuracion IP\n\n" +
+          "Adaptador de red:\n" +
           "   Direccion IPv4. . . . : 192.168.1.42\n" +
           "   Mascara de subred . . : 255.255.255.0\n" +
           "   Puerta de enlace. . . : 192.168.1.1\n\n" +
           "FLAG(los_comandos_revelan_datos_de_red)";
-      } else if (c === 'clear') {
+      } else if (c === 'clear' || c === 'cls') {
         salida.textContent = "";
         input.value = "";
         return;

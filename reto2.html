@@ -9,24 +9,47 @@
     h1 { color: #4a4a9c; }
     .pista { background: #fff7e6; padding: 12px 16px; border-radius: 8px; border-left: 5px solid #f0ad4e; }
     .flag { background: #1e1e1e; color: #0f0; font-family: monospace; padding: 12px; border-radius: 6px; margin-top: 16px; }
-    a { color: #4a4a9c; }
+    .opciones { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .opciones a { display: inline-block; padding: 8px 12px; background: #eee; border-radius: 6px; text-decoration: none; color: #333; font-family: monospace; font-size: 0.9em; }
+    .opciones a:hover { background: #ddd; }
+    a.volver { color: #4a4a9c; }
+    code { background: #f0f0f0; padding: 2px 5px; border-radius: 4px; }
   </style>
 </head>
 <body>
   <h1>🐶 Reto 2 — La puerta de pruebas</h1>
   <p>Esta página tiene un "modo desarrollador" que el equipo usaba para hacer pruebas... y olvidó desactivar.</p>
+
   <div class="pista">
-    <p><b>Pista:</b> Los modos de prueba se suelen activar desde la propia dirección web. Prueba añadir <code>?debug=true</code> al final de la URL y pulsa Enter.</p>
+    <p><b>Pista:</b> Los modos de prueba se activan pasando un <b>parámetro</b> en la dirección web, con el formato <code>?nombre=valor</code> al final de la URL. Pero, ¿cuál es el correcto?</p>
+    <p>Los desarrolladores suelen usar nombres relacionados con "pruebas", "depuración" o "desarrollo". Solo <b>uno</b> de estos abre la puerta. Pruébalos (puedes hacer clic o escribirlos tú mismo en la barra de direcciones):</p>
+    <div class="opciones">
+      <a href="?test=true">?test=true</a>
+      <a href="?admin=true">?admin=true</a>
+      <a href="?debug=true">?debug=true</a>
+      <a href="?dev=true">?dev=true</a>
+      <a href="?modo=pruebas">?modo=pruebas</a>
+      <a href="?root=1">?root=1</a>
+      <a href="?developer=on">?developer=on</a>
+      <a href="?sandbox=true">?sandbox=true</a>
+    </div>
   </div>
+
   <div id="zonaFlag"></div>
-  <p style="margin-top:20px;"><a href="index.html">← Volver al menú</a></p>
+
+  <p style="margin-top:20px;"><a class="volver" href="index.html">← Volver al menú</a></p>
 
   <script>
     const params = new URLSearchParams(window.location.search);
+    // Solo este parámetro exacto activa la bandera.
     if (params.get('debug') === 'true') {
       document.getElementById('zonaFlag').innerHTML =
         '<div class="flag">🔧 Modo Desarrollador ACTIVADO<br><br>' +
         'FLAG(parametros_ocultos_en_la_url)</div>';
+    } else if (window.location.search.length > 0) {
+      // Si probó un parámetro pero no es el correcto, le damos retroalimentación.
+      document.getElementById('zonaFlag').innerHTML =
+        '<p style="color:#c0392b;">❌ Ese parámetro no activó nada. Prueba otro.</p>';
     }
   </script>
 </body>

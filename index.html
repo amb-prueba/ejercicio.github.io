@@ -7,7 +7,7 @@
   <!-- =========================================================
        Blog de Mascotas - v1.0
        TODO: eliminar notas internas antes de produccion
-       FLAG1{el_codigo_fuente_no_oculta_nada}
+       FLAG1(el_codigo_fuente_no_oculta_nada)
        ========================================================= -->
   <style>
     body { font-family: Arial, sans-serif; max-width: 680px; margin: 30px auto; padding: 0 15px; color: #222; }
@@ -30,7 +30,7 @@
 <body>
   <h1>🐶 Reto: El Blog de Mascotas</h1>
   <div class="intro">
-    <p>Hay <b>3 banderas ocultas</b> con el formato <code>FLAG{...}</code>.</p>
+    <p>Hay <b>3 banderas ocultas</b> con el formato <code>FLAG(...)</code>.</p>
     <p>Encuéntralas y escríbelas abajo para desbloquear cada candado.</p>
   </div>
 
@@ -43,7 +43,7 @@
   </div>
 
   <div class="candado" id="c3">🔒 <b>Candado 3</b>
-    <p class="pista">Pista: Usa la terminal de abajo. Igual que en una consola real, ciertos comantos revelan información de red. Prueba escribir <code>ipconfig</code> y pulsar Enter.</p>
+    <p class="pista">Pista: Usa la terminal de abajo. Igual que en una consola real, ciertos comandos revelan información de red. Prueba escribir <code>ipconfig</code> y pulsar Enter.</p>
   </div>
 
   <hr>
@@ -62,14 +62,14 @@
     // --- FLAG2: modo debug por parámetro de URL ---
     const params = new URLSearchParams(window.location.search);
     if (params.get('debug') === 'true') {
-      alert("🔧 Modo Desarrollador activado.\n\nDejaste una puerta de pruebas abierta:\n\nFLAG2{parametros_ocultos_en_la_url}");
+      alert("🔧 Modo Desarrollador activado.\n\nDejaste una puerta de pruebas abierta:\n\nFLAG2(parametros_ocultos_en_la_url)");
     }
 
     // --- Validación de banderas ---
     const flags = {
-      "FLAG1{el_codigo_fuente_no_oculta_nada}": 1,
-      "FLAG2{parametros_ocultos_en_la_url}": 2,
-      "FLAG3{los_comandos_revelan_datos_de_red}": 3
+      "FLAG1(el_codigo_fuente_no_oculta_nada)": 1,
+      "FLAG2(parametros_ocultos_en_la_url)": 2,
+      "FLAG3(los_comandos_revelan_datos_de_red)": 3
     };
 
     function revisar() {
@@ -103,7 +103,7 @@
           "   Direccion IPv4. . . . : 192.168.1.42\n" +
           "   Mascara de subred . . : 255.255.255.0\n" +
           "   Puerta de enlace. . . : 192.168.1.1\n\n" +
-          "FLAG3{los_comandos_revelan_datos_de_red}";
+          "FLAG3(los_comandos_revelan_datos_de_red)";
       } else if (c === 'clear') {
         salida.textContent = "";
         input.value = "";

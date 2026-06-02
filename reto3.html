@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reto 3 - La terminal</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 680px; margin: 30px auto; padding: 0 15px; color: #222; }
+    h1 { color: #4a4a9c; }
+    .pista { background: #fff7e6; padding: 12px 16px; border-radius: 8px; border-left: 5px solid #f0ad4e; }
+    #terminal { background: #1e1e1e; color: #0f0; font-family: monospace; padding: 12px; border-radius: 6px; margin-top: 16px; }
+    #salida { white-space: pre-wrap; margin: 0 0 8px; min-height: 40px; }
+    #cmd { background: #1e1e1e; color: #0f0; border: none; font-family: monospace; width: 70%; outline: none; }
+    a { color: #4a4a9c; }
+  </style>
+</head>
+<body>
+  <h1>🐶 Reto 3 — La terminal</h1>
+  <p>Una terminal igual que la de tu sistema. En seguridad, ciertos comandos revelan información del equipo y de la red: ese es el primer paso de un atacante (reconocimiento).</p>
+  <div class="pista">
+    <p><b>Pista:</b> Escribe <code>help</code> para ver los comandos. Luego prueba <code>ipconfig</code> y pulsa Enter.</p>
+  </div>
+
+  <div id="terminal">
+    <p id="salida">Microsoft Windows [Version 10.0]. Escribe "help" para empezar.</p>
+    <span>&gt;&nbsp;</span><input type="text" id="cmd" autocomplete="off" onkeydown="if(event.key==='Enter')ejecutar()">
+  </div>
+  <p style="margin-top:20px;"><a href="index.html">← Volver al menú</a></p>
+
+  <script>
+    function ejecutar() {
+      const input = document.getElementById('cmd');
+      const salida = document.getElementById('salida');
+      const c = input.value.trim().toLowerCase();
+      let resp = "";
+      if (c === 'help') {
+        resp = "Comandos disponibles: help, ipconfig, clear";
+      } else if (c === 'ipconfig') {
+        resp =
+          "Configuracion IP de Windows\n\n" +
+          "Adaptador de Ethernet:\n" +
+          "   Direccion IPv4. . . . : 192.168.1.42\n" +
+          "   Mascara de subred . . : 255.255.255.0\n" +
+          "   Puerta de enlace. . . : 192.168.1.1\n\n" +
+          "FLAG(los_comandos_revelan_datos_de_red)";
+      } else if (c === 'clear') {
+        salida.textContent = "";
+        input.value = "";
+        return;
+      } else if (c === '') {
+        input.value = "";
+        return;
+      } else {
+        resp = "'" + c + "' no se reconoce como comando interno o externo.";
+      }
+      salida.textContent += "\n> " + c + "\n" + resp;
+      input.value = "";
+      salida.scrollTop = salida.scrollHeight;
+    }
+  </script>
+</body>
+</html>

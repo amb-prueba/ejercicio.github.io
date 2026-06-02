@@ -9,9 +9,7 @@
     h1 { color: #4a4a9c; }
     .pista { background: #fff7e6; padding: 12px 16px; border-radius: 8px; border-left: 5px solid #f0ad4e; }
     .flag { background: #1e1e1e; color: #0f0; font-family: monospace; padding: 12px; border-radius: 6px; margin-top: 16px; }
-    .opciones { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-    .opciones a { display: inline-block; padding: 8px 12px; background: #eee; border-radius: 6px; text-decoration: none; color: #333; font-family: monospace; font-size: 0.9em; }
-    .opciones a:hover { background: #ddd; }
+    .lista { background: #f0f0f0; border-radius: 6px; padding: 12px 16px; font-family: monospace; line-height: 1.9; }
     a.volver { color: #4a4a9c; }
     code { background: #f0f0f0; padding: 2px 5px; border-radius: 4px; }
   </style>
@@ -21,19 +19,20 @@
   <p>Esta página tiene un "modo desarrollador" que el equipo usaba para hacer pruebas... y olvidó desactivar.</p>
 
   <div class="pista">
-    <p><b>Pista:</b> Los modos de prueba se activan pasando un <b>parámetro</b> en la dirección web, con el formato <code>?nombre=valor</code> al final de la URL. Pero, ¿cuál es el correcto?</p>
-    <p>Los desarrolladores suelen usar nombres relacionados con "pruebas", "depuración" o "desarrollo". Solo <b>uno</b> de estos abre la puerta. Pruébalos (puedes hacer clic o escribirlos tú mismo en la barra de direcciones):</p>
-    <div class="opciones">
-      <a href="?test=true">?test=true</a>
-      <a href="?admin=true">?admin=true</a>
-      
-      <a href="?dev=true">?dev=true</a>
-      <a href="?modo=pruebas">?modo=pruebas</a>
-      <a href="?root=1">?root=1</a>
-      <a href="?developer=on">?developer=on</a>
-      <a href="?debug=true">?debug=true</a>
-      <a href="?sandbox=true">?sandbox=true</a>
+    <p><b>Pista:</b> Los modos de prueba se activan pasando un <b>parámetro</b> en la dirección web. Se escribe al final de la URL con el formato <code>?nombre=valor</code>.</p>
+    <p><b>Cómo se hace:</b> copia uno de los parámetros de abajo, pégalo al final de la dirección de esta página en la barra del navegador (justo después de <code>reto2.html</code>) y pulsa Enter. Los desarrolladores suelen usar nombres ligados a "pruebas", "depuración" o "desarrollo". Solo <b>uno</b> abre la puerta:</p>
+    <div class="lista">
+      ?test=true<br>
+      ?admin=true<br>
+      ?debug=true<br>
+      ?dev=true<br>
+      ?modo=pruebas<br>
+      ?root=1<br>
+      ?developer=on<br>
+      ?sandbox=true
     </div>
+    <p style="font-size:0.9em;color:#777;margin-top:10px;">Ejemplo de cómo quedaría la barra de direcciones:<br>
+    <code>https://tu-usuario.github.io/repo/reto2.html?test=true</code></p>
   </div>
 
   <div id="zonaFlag"></div>
@@ -48,9 +47,8 @@
         '<div class="flag">🔧 Modo Desarrollador ACTIVADO<br><br>' +
         'FLAG(parametros_ocultos_en_la_url)</div>';
     } else if (window.location.search.length > 0) {
-      // Si probó un parámetro pero no es el correcto, le damos retroalimentación.
       document.getElementById('zonaFlag').innerHTML =
-        '<p style="color:#c0392b;">❌ Ese parámetro no activó nada. Prueba otro.</p>';
+        '<p style="color:#c0392b;">❌ Ese parámetro no activó nada. Prueba con otro de la lista.</p>';
     }
   </script>
 </body>

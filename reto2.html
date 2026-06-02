@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reto 2 - La puerta de pruebas</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 680px; margin: 30px auto; padding: 0 15px; color: #222; }
+    h1 { color: #4a4a9c; }
+    .pista { background: #fff7e6; padding: 12px 16px; border-radius: 8px; border-left: 5px solid #f0ad4e; }
+    .flag { background: #1e1e1e; color: #0f0; font-family: monospace; padding: 12px; border-radius: 6px; margin-top: 16px; }
+    a { color: #4a4a9c; }
+  </style>
+</head>
+<body>
+  <h1>🐶 Reto 2 — La puerta de pruebas</h1>
+  <p>Esta página tiene un "modo desarrollador" que el equipo usaba para hacer pruebas... y olvidó desactivar.</p>
+  <div class="pista">
+    <p><b>Pista:</b> Los modos de prueba se suelen activar desde la propia dirección web. Prueba añadir <code>?debug=true</code> al final de la URL y pulsa Enter.</p>
+  </div>
+  <div id="zonaFlag"></div>
+  <p style="margin-top:20px;"><a href="index.html">← Volver al menú</a></p>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('debug') === 'true') {
+      document.getElementById('zonaFlag').innerHTML =
+        '<div class="flag">🔧 Modo Desarrollador ACTIVADO<br><br>' +
+        'FLAG(parametros_ocultos_en_la_url)</div>';
+    }
+  </script>
+</body>
+</html>

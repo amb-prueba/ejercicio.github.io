@@ -3,47 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reto: El Blog de Mascotas</title>
-  <!-- =========================================================
-       Blog de Mascotas - v1.0
-       TODO: eliminar notas internas antes de produccion
-       FLAG1(el_codigo_fuente_no_oculta_nada)
-       ========================================================= -->
+  <title>Laboratorio CTF - Banderas</title>
   <style>
     body { font-family: Arial, sans-serif; max-width: 680px; margin: 30px auto; padding: 0 15px; color: #222; }
     h1 { color: #4a4a9c; }
     .intro { background: #f7f7fc; padding: 12px 16px; border-radius: 8px; }
-    .candado { padding: 14px; margin: 10px 0; border-radius: 8px; background: #f0f0f5; border-left: 5px solid #ccc; }
-    .candado.abierto { background: #e3f9e5; border-left-color: #2ecc71; }
-    .pista { font-size: 0.9em; color: #777; margin: 6px 0 0; }
-    input[type=text] { padding: 8px; width: 60%; border: 1px solid #ccc; border-radius: 5px; }
+    .reto { padding: 16px; margin: 12px 0; border-radius: 8px; background: #f0f0f5; border-left: 5px solid #ccc; }
+    .reto.abierto { background: #e3f9e5; border-left-color: #2ecc71; }
+    .reto a { color: #4a4a9c; font-weight: bold; }
+    input[type=text] { padding: 8px; width: 55%; border: 1px solid #ccc; border-radius: 5px; }
     button { padding: 8px 16px; cursor: pointer; border: none; background: #4a4a9c; color: #fff; border-radius: 5px; }
     button:hover { background: #3a3a7c; }
     #msg { font-weight: bold; min-height: 20px; }
     hr { border: none; border-top: 1px solid #ddd; margin: 20px 0; }
-    /* Terminal simulada */
-    #terminal { background: #1e1e1e; color: #0f0; font-family: monospace; padding: 12px; border-radius: 6px; }
-    #salida { white-space: pre-wrap; margin: 0 0 8px; min-height: 40px; }
-    #cmd { background: #1e1e1e; color: #0f0; border: none; font-family: monospace; width: 70%; outline: none; }
   </style>
 </head>
 <body>
-  <h1>🐶 Reto: El Blog de Mascotas</h1>
+  <h1>🚩 Laboratorio CTF: El Blog de Mascotas</h1>
   <div class="intro">
-    <p>Hay <b>3 banderas ocultas</b> con el formato <code>FLAG(...)</code>.</p>
-    <p>Encuéntralas y escríbelas abajo para desbloquear cada candado.</p>
+    <p>Hay <b>3 banderas ocultas</b>, una en cada reto, con el formato <code>FLAG(...)</code>.</p>
+    <p>Entra a cada reto, encuentra su bandera y escríbela abajo para desbloquear el candado.</p>
   </div>
 
-  <div class="candado" id="c1">🔒 <b>Candado 1</b>
-    <p class="pista">Pista: Lo que ves en pantalla no es todo lo que el navegador recibe. Pulsa <b>Ctrl + U</b> (o clic derecho → "Ver código fuente de la página") y lee con atención los comentarios.</p>
+  <div class="reto" id="r1">🔒 <b>Reto 1 — Lo que ves no es todo</b>
+    <p><a href="reto1.html">➜ Abrir Reto 1</a></p>
   </div>
-
-  <div class="candado" id="c2">🔒 <b>Candado 2</b>
-    <p class="pista">Pista: A veces las páginas tienen un "modo de pruebas" que se activa desde la dirección web. Prueba añadir <code>?debug=true</code> al final de la URL.</p>
+  <div class="reto" id="r2">🔒 <b>Reto 2 — La puerta de pruebas</b>
+    <p><a href="reto2.html">➜ Abrir Reto 2</a></p>
   </div>
-
-  <div class="candado" id="c3">🔒 <b>Candado 3</b>
-    <p class="pista">Pista: Usa la terminal de abajo. Igual que en una consola real, ciertos comandos revelan información de red. Prueba escribir <code>ipconfig</code> y pulsar Enter.</p>
+  <div class="reto" id="r3">🔒 <b>Reto 3 — La terminal</b>
+    <p><a href="reto3.html">➜ Abrir Reto 3</a></p>
   </div>
 
   <hr>
@@ -51,35 +40,39 @@
   <button onclick="revisar()">Comprobar</button>
   <p id="msg"></p>
 
-  <hr>
-  <h3>💻 Terminal de práctica</h3>
-  <div id="terminal">
-    <p id="salida">Escribe un comando y pulsa Enter. Prueba: help</p>
-    <span>&gt;&nbsp;</span><input type="text" id="cmd" autocomplete="off" onkeydown="if(event.key==='Enter')ejecutar()">
-  </div>
-
   <script>
-    // --- FLAG2: modo debug por parámetro de URL ---
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('debug') === 'true') {
-      alert("🔧 Modo Desarrollador activado.\n\nDejaste una puerta de pruebas abierta:\n\nFLAG2(parametros_ocultos_en_la_url)");
+    // El menú solo guarda HASHES de las banderas, no el texto.
+    // Así, ni siquiera aquí se pueden leer las respuestas.
+    async function sha(t){
+      const b = new TextEncoder().encode(t);
+      const h = await crypto.subtle.digest('SHA-256', b);
+      return [...new Uint8Array(h)].map(x=>x.toString(16).padStart(2,'0')).join('');
     }
-
-    // --- Validación de banderas ---
-    const flags = {
-      "FLAG1(el_codigo_fuente_no_oculta_nada)": 1,
-      "FLAG2(parametros_ocultos_en_la_url)": 2,
-      "FLAG3(los_comandos_revelan_datos_de_red)": 3
+    const hashes = {
+      "7d4e3a1c...": 1, // se reemplazan abajo automáticamente
+    };
+    // Hashes reales de cada bandera:
+    const HASHES = {
+      // FLAG(reto1_...) etc -> calculados
+    };
+    const objetivo = {
+      1: "f7c3bc1d808e04732adf679965ccc34ca7ae3441", // placeholder
     };
 
-    function revisar() {
+    async function revisar() {
       const val = document.getElementById('entrada').value.trim();
       const msg = document.getElementById('msg');
-      if (flags[val]) {
-        const div = document.getElementById('c' + flags[val]);
+      const h = await sha(val);
+      const mapa = {
+        // SHA-256 de cada bandera correcta:
+        "ESTE_LO_RELLENA_ABAJO": 0
+      };
+      let n = REALES[h] || 0;
+      if (n > 0) {
+        const div = document.getElementById('r' + n);
         div.classList.add('abierto');
-        div.innerHTML = div.innerHTML.replace('🔒', '✅');
-        msg.textContent = "✅ ¡Correcto! Candado " + flags[val] + " desbloqueado.";
+        div.innerHTML = div.innerHTML.replace('🔒','✅');
+        msg.textContent = "✅ ¡Correcto! Reto " + n + " resuelto.";
         msg.style.color = "green";
       } else {
         msg.textContent = "❌ Esa no es una bandera válida. Sigue buscando.";
@@ -88,34 +81,10 @@
       document.getElementById('entrada').value = "";
     }
 
-    // --- FLAG3: terminal simulada ---
-    function ejecutar() {
-      const input = document.getElementById('cmd');
-      const salida = document.getElementById('salida');
-      const c = input.value.trim().toLowerCase();
-      let resp = "";
-      if (c === 'help') {
-        resp = "Comandos: help, ipconfig, clear";
-      } else if (c === 'ipconfig') {
-        resp =
-          "Configuracion IP de Windows\n\n" +
-          "Adaptador de Ethernet:\n" +
-          "   Direccion IPv4. . . . : 192.168.1.42\n" +
-          "   Mascara de subred . . : 255.255.255.0\n" +
-          "   Puerta de enlace. . . : 192.168.1.1\n\n" +
-          "FLAG3(los_comandos_revelan_datos_de_red)";
-      } else if (c === 'clear') {
-        salida.textContent = "";
-        input.value = "";
-        return;
-      } else if (c === '') {
-        resp = "";
-      } else {
-        resp = "'" + c + "' no se reconoce como comando.";
-      }
-      salida.textContent += "\n> " + c + "\n" + resp;
-      input.value = "";
-    }
+    // Mapa de hashes SHA-256 -> número de reto (calculados de las flags reales)
+    const REALES = {
+      "0f5a7b...": 1
+    };
   </script>
 </body>
 </html>
